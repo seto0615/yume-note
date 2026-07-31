@@ -1,4 +1,5 @@
 import { useEffect, type ReactNode } from 'react'
+import { Leaf } from './Geo'
 
 interface Props {
   title: string
@@ -30,7 +31,10 @@ export default function Modal({ title, onClose, children }: Props) {
     >
       <div className="modal" role="dialog" aria-modal="true" aria-label={title}>
         <div className="modal-grip" />
-        <h2>{title}</h2>
+        <h2>
+          <Leaf tone="s" size={9} />
+          {title}
+        </h2>
         {children}
       </div>
     </div>

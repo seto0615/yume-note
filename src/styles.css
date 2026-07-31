@@ -1,35 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700;900&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Chivo+Mono:wght@200;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Chivo+Mono:wght@200;300;400;500&display=swap');
 
 /* ===========================================================
-   夢ノート — 「夜明け前の天文台」
-   深い夜紺の紙面に、真鍮の針。時間＝命を静かに突きつける計器。
+   夢ノート
+   デザインは tax.hatenabase.jp の幾何学紋様を下敷きにした暗色版。
+   4トーン（navy / blu / sky / pale）と、正方形・円・1/4円・葉型の
+   タイル語彙だけで装飾する。太字ゴシック＋広いトラッキング。
    =========================================================== */
 
 :root {
-  --ink-900: #070911;
-  --ink-800: #0c1019;
-  --ink-700: #121724;
-  --ink-600: #1a2031;
-  --ink-500: #232a3d;
+  /* はてなベース 幾何学4トーン */
+  --navy: #0a2846;
+  --blu: #2d5fa8;
+  /* 暗い地の上では navy がそのままだと沈むため、タイル用に一段持ち上げた紺を使う */
+  --navy-tile: #1d4571;
+  --sky: #a9c4e4;
+  --pale: #dce6f2;
 
-  --line: rgba(232, 226, 214, 0.09);
-  --line-strong: rgba(232, 226, 214, 0.18);
+  /* navy から起こした暗色の面 */
+  --bg-900: #04101c;
+  --bg-800: #071a2c;
+  --bg-700: #0a2846;
 
-  --paper: #ece7dc;
-  --paper-dim: #a8a494;
-  --paper-faint: #6f7183;
+  --line: rgba(169, 196, 228, 0.14);
+  --line-strong: rgba(169, 196, 228, 0.26);
 
-  --brass: #d2a63c;
-  --brass-bright: #f0cf7a;
-  --brass-deep: #8a6c1f;
+  --ink: #e7edf5;
+  --mute: #9db0c6;
+  --faint: #697f99;
 
-  --danger: #d4614f;
+  --danger: #d97a6c;
 
-  --radius: 14px;
-  --radius-sm: 9px;
+  --radius: 12px;
+  --radius-sm: 8px;
 
-  --display: 'Zen Old Mincho', 'Hiragino Mincho ProN', serif;
-  --body: 'Zen Kaku Gothic New', 'Hiragino Sans', sans-serif;
+  --body: 'Zen Kaku Gothic New', 'Hiragino Kaku Gothic ProN', 'Noto Sans JP', sans-serif;
   --mono: 'Chivo Mono', ui-monospace, monospace;
 
   --tabbar: calc(58px + env(safe-area-inset-bottom));
@@ -37,7 +41,9 @@
   color-scheme: dark;
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -48,11 +54,11 @@ body {
 }
 
 body {
-  background: var(--ink-900);
-  color: var(--paper);
+  background: var(--bg-900);
+  color: var(--ink);
   font-family: var(--body);
   font-size: 15px;
-  line-height: 1.7;
+  line-height: 1.8;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none;
@@ -73,6 +79,52 @@ button {
   padding: 0;
 }
 
+/* --- 幾何学タイル ------------------------------------------- */
+
+.geo {
+  display: inline-grid;
+  vertical-align: middle;
+}
+
+.geo i,
+.leaf {
+  display: block;
+}
+
+.n {
+  background: var(--navy-tile);
+}
+.b {
+  background: var(--blu);
+}
+.s {
+  background: var(--sky);
+}
+.p {
+  background: var(--pale);
+}
+
+.o {
+  border-radius: 50%;
+}
+.tl {
+  border-radius: 100% 0 0 0;
+}
+.tr {
+  border-radius: 0 100% 0 0;
+}
+.bl {
+  border-radius: 0 0 0 100%;
+}
+.br {
+  border-radius: 0 0 100% 0;
+}
+
+.leaf {
+  border-radius: 0 100% 0 100%;
+  flex-shrink: 0;
+}
+
 /* --- 画面の器 ------------------------------------------------ */
 
 .shell {
@@ -81,54 +133,59 @@ button {
   min-height: 100dvh;
   margin: 0 auto;
   background:
-    radial-gradient(120% 70% at 50% -10%, rgba(210, 166, 60, 0.13), transparent 62%),
-    linear-gradient(180deg, #0d111c 0%, #080a12 42%, #070911 100%);
+    radial-gradient(115% 62% at 50% -6%, rgba(45, 95, 168, 0.28), transparent 60%),
+    linear-gradient(180deg, #08203a 0%, #061727 44%, var(--bg-900) 100%);
   border-inline: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   isolation: isolate;
 }
 
-/* 星の砂のようなグレイン */
-.shell::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  opacity: 0.5;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E");
-  mix-blend-mode: overlay;
-}
-
 .header {
   position: relative;
   z-index: 1;
-  padding: calc(env(safe-area-inset-top) + 20px) 20px 12px;
+  padding: calc(env(safe-area-inset-top) + 20px) 20px 14px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--line);
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
   gap: 12px;
 }
 
 .header h1 {
   margin: 0;
-  font-family: var(--display);
-  font-weight: 500;
-  font-size: 21px;
-  letter-spacing: 0.16em;
-  line-height: 1.2;
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
 }
 
 .header .eyebrow {
   display: block;
-  font-family: var(--mono);
-  font-size: 9.5px;
-  font-weight: 300;
-  letter-spacing: 0.34em;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--brass);
-  margin-bottom: 7px;
+  color: var(--sky);
+  margin-bottom: 5px;
+}
+
+/* 見出し下の右端に落とす葉型。tax サイトの .rleaf の踏襲 */
+.header::after {
+  content: '';
+  position: absolute;
+  right: 20px;
+  bottom: -5px;
+  width: 9px;
+  height: 9px;
+  background: var(--blu);
+  border-radius: 0 100% 0 100%;
 }
 
 .main {
@@ -136,7 +193,7 @@ button {
   z-index: 1;
   flex: 1;
   /* タブバーと FAB の下に最後の要素が潜り込まないだけの余白 */
-  padding: 8px 20px calc(var(--tabbar) + 76px);
+  padding: 16px 20px calc(var(--tabbar) + 76px);
 }
 
 /* --- タブバー ------------------------------------------------ */
@@ -152,20 +209,21 @@ button {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   padding-bottom: env(safe-area-inset-bottom);
-  background: rgba(8, 10, 18, 0.86);
+  background: rgba(6, 23, 39, 0.9);
   backdrop-filter: blur(18px) saturate(140%);
   -webkit-backdrop-filter: blur(18px) saturate(140%);
   border-top: 1px solid var(--line-strong);
 }
 
 .tabbar button {
+  position: relative;
   height: 58px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 4px;
-  color: var(--paper-faint);
+  color: var(--faint);
   transition: color 0.2s ease;
 }
 
@@ -181,56 +239,83 @@ button {
 
 .tabbar button span {
   font-size: 9.5px;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
+  font-weight: 700;
 }
 
 .tabbar button[aria-current='true'] {
-  color: var(--brass-bright);
+  color: var(--pale);
 }
 
+/* アクティブ表示は帯ではなく葉型ひと粒 */
 .tabbar button[aria-current='true']::before {
   content: '';
   position: absolute;
-  top: -1px;
-  width: 26px;
-  height: 2px;
-  background: var(--brass);
-  border-radius: 0 0 2px 2px;
-}
-
-.tabbar button {
-  position: relative;
+  top: 5px;
+  width: 7px;
+  height: 7px;
+  background: var(--sky);
+  border-radius: 0 100% 0 100%;
 }
 
 /* --- 汎用パーツ ---------------------------------------------- */
 
 .card {
-  background: linear-gradient(168deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.018));
+  position: relative;
+  background: rgba(169, 196, 228, 0.045);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 18px;
+  overflow: hidden;
+}
+
+/* カード右下に敷く 1/4円。幾何学パターン仕様の「カード右下」 */
+.card::after,
+.dream::after,
+.today-card::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 34px;
+  height: 34px;
+  background: var(--pale);
+  border-radius: 100% 0 0 0;
+  opacity: 0.09;
+  pointer-events: none;
 }
 
 .section-label {
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 300;
-  letter-spacing: 0.3em;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--paper-faint);
+  color: var(--mute);
   margin: 30px 0 12px;
 }
 
+.section-label::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  background: var(--blu);
+  border-radius: 0 100% 0 100%;
+}
+
 .section-label:first-child {
-  margin-top: 6px;
+  margin-top: 4px;
 }
 
 .muted {
-  color: var(--paper-dim);
+  color: var(--mute);
 }
 
 .faint {
-  color: var(--paper-faint);
+  color: var(--faint);
 }
 
 .mono {
@@ -240,18 +325,24 @@ button {
 
 .empty {
   text-align: center;
-  padding: 44px 16px;
-  color: var(--paper-faint);
+  padding: 30px 16px 44px;
+  color: var(--faint);
   font-size: 13.5px;
   line-height: 2;
 }
 
+.empty .geo {
+  margin: 0 auto 30px;
+  opacity: 0.9;
+}
+
 .empty .quote {
-  font-family: var(--display);
-  font-size: 15px;
-  color: var(--paper-dim);
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--pale);
   display: block;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
 }
 
 .btn {
@@ -259,30 +350,34 @@ button {
   align-items: center;
   justify-content: center;
   gap: 7px;
-  padding: 11px 18px;
-  border-radius: 999px;
+  padding: 12px 20px;
+  border-radius: var(--radius-sm);
   font-size: 13.5px;
+  font-weight: 700;
   letter-spacing: 0.06em;
   border: 1px solid var(--line-strong);
-  color: var(--paper);
-  background: rgba(255, 255, 255, 0.04);
-  transition: background 0.18s ease, border-color 0.18s ease, transform 0.12s ease;
+  color: var(--ink);
+  background: rgba(169, 196, 228, 0.05);
+  transition: background 0.18s ease, transform 0.16s ease, box-shadow 0.2s ease;
 }
 
 .btn:active {
-  transform: scale(0.97);
+  transform: translateY(1px);
 }
 
 .btn-primary {
-  background: linear-gradient(160deg, var(--brass-bright), var(--brass));
-  border-color: transparent;
-  color: #201703;
-  font-weight: 700;
+  background: var(--pale);
+  border-color: var(--pale);
+  color: var(--navy);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 4px 14px rgba(169, 196, 228, 0.22);
 }
 
 .btn-danger {
   color: var(--danger);
-  border-color: rgba(212, 97, 79, 0.4);
+  border-color: rgba(217, 122, 108, 0.4);
 }
 
 .btn-block {
@@ -290,8 +385,13 @@ button {
 }
 
 .btn-sm {
-  padding: 7px 13px;
+  padding: 8px 14px;
   font-size: 12px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: default;
 }
 
 .fab {
@@ -301,15 +401,17 @@ button {
   z-index: 35;
   width: 52px;
   height: 52px;
-  border-radius: 50%;
-  background: linear-gradient(160deg, var(--brass-bright), var(--brass));
-  color: #201703;
-  font-size: 26px;
+  /* 角丸を1角だけ落として、タイル語彙の「角丸正方形」に寄せる */
+  border-radius: 50% 14px 50% 50%;
+  background: var(--pale);
+  color: var(--navy);
+  font-size: 25px;
+  font-weight: 700;
   line-height: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55), 0 0 0 1px rgba(240, 207, 122, 0.3);
+  box-shadow: 0 10px 26px rgba(4, 16, 28, 0.6);
   transition: transform 0.14s ease;
 }
 
@@ -326,16 +428,17 @@ button {
 .field > label {
   display: block;
   font-size: 11.5px;
-  letter-spacing: 0.12em;
-  color: var(--paper-dim);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--sky);
   margin-bottom: 7px;
 }
 
 .field .hint {
   font-size: 11px;
-  color: var(--paper-faint);
+  color: var(--faint);
   margin-top: 6px;
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
 input[type='text'],
@@ -346,7 +449,7 @@ select,
 textarea {
   width: 100%;
   padding: 11px 13px;
-  background: rgba(0, 0, 0, 0.28);
+  background: rgba(4, 16, 28, 0.55);
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-sm);
   outline: none;
@@ -357,16 +460,15 @@ textarea {
 input:focus,
 select:focus,
 textarea:focus {
-  border-color: var(--brass);
+  border-color: var(--sky);
 }
 
 textarea {
   resize: vertical;
   min-height: 78px;
-  line-height: 1.75;
+  line-height: 1.8;
 }
 
-/* iOS の date/time は既定でフォント指定が効きにくいので明示 */
 input[type='date'],
 input[type='time'] {
   font-family: var(--mono);
@@ -400,39 +502,40 @@ input[type='time'] {
 
 .chip {
   flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 7px;
   padding: 7px 14px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--line-strong);
   font-size: 12.5px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   white-space: nowrap;
-  color: var(--paper-dim);
+  color: var(--mute);
   transition: all 0.18s ease;
 }
 
 .chip[aria-pressed='true'] {
-  color: #12141c;
-  font-weight: 700;
+  color: var(--navy);
   border-color: transparent;
 }
 
-.chip .dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  margin-right: 7px;
-  vertical-align: 1px;
+/* 分野の識別はタイルの「形」で行う */
+.chip .mark {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
 }
 
-.chip[aria-pressed='true'] .dot {
-  display: none;
+.chip[aria-pressed='true'] .mark {
+  background: var(--navy) !important;
 }
 
 .chip .count {
   font-family: var(--mono);
   font-size: 10.5px;
-  opacity: 0.7;
-  margin-left: 6px;
+  opacity: 0.75;
 }
 
 /* --- モーダル ------------------------------------------------ */
@@ -441,7 +544,7 @@ input[type='time'] {
   position: fixed;
   inset: 0;
   z-index: 60;
-  background: rgba(4, 5, 10, 0.72);
+  background: rgba(3, 10, 18, 0.76);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   display: flex;
@@ -456,10 +559,10 @@ input[type='time'] {
   max-height: 92dvh;
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
-  background: linear-gradient(180deg, #141926, #0b0e17);
+  background: linear-gradient(180deg, #0e2843, #061626);
   border: 1px solid var(--line-strong);
   border-bottom: none;
-  border-radius: 20px 20px 0 0;
+  border-radius: 16px 16px 0 0;
   padding: 8px 20px calc(env(safe-area-inset-bottom) + 24px);
   animation: rise 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
 }
@@ -473,11 +576,15 @@ input[type='time'] {
 }
 
 .modal h2 {
-  font-family: var(--display);
-  font-size: 17px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  margin: 0 0 20px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 0 22px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
 }
 
 .modal-actions {
@@ -506,16 +613,17 @@ input[type='time'] {
 /* --- 人生時計 ------------------------------------------------ */
 
 .clock-hero {
+  position: relative;
   text-align: center;
-  padding: 22px 0 6px;
+  padding: 26px 0 8px;
 }
 
 .clock-hero .label {
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.32em;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: var(--paper-faint);
+  color: var(--sky);
 }
 
 .clock-hero .days {
@@ -524,38 +632,44 @@ input[type='time'] {
   font-size: clamp(58px, 21vw, 88px);
   line-height: 1;
   letter-spacing: -0.02em;
-  margin: 12px 0 4px;
-  color: var(--brass-bright);
-  text-shadow: 0 0 44px rgba(210, 166, 60, 0.38);
+  margin: 14px 0 4px;
+  color: var(--pale);
+  text-shadow: 0 0 48px rgba(169, 196, 228, 0.34);
   font-variant-numeric: tabular-nums;
-  animation: breathe 5s ease-in-out infinite;
-}
-
-@keyframes breathe {
-  50% {
-    text-shadow: 0 0 62px rgba(210, 166, 60, 0.55);
-  }
 }
 
 .clock-hero .unit {
-  font-family: var(--display);
-  font-size: 14px;
-  letter-spacing: 0.26em;
-  color: var(--paper-dim);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  color: var(--mute);
+}
+
+/* 数字の左右に置く縦タイル。名刺の縦帯モザイクの縮小版 */
+.clock-hero .geo {
+  position: absolute;
+  top: 46px;
+}
+
+.clock-hero .geo.left {
+  left: 2px;
+}
+
+.clock-hero .geo.right {
+  right: 2px;
 }
 
 .clock-bar {
-  margin: 22px 0 6px;
-  height: 3px;
-  background: rgba(255, 255, 255, 0.07);
-  border-radius: 2px;
+  margin: 24px 0 7px;
+  height: 4px;
+  background: rgba(169, 196, 228, 0.1);
   overflow: hidden;
 }
 
 .clock-bar > i {
   display: block;
   height: 100%;
-  background: linear-gradient(90deg, var(--brass-deep), var(--brass-bright));
+  background: linear-gradient(90deg, var(--blu), var(--sky));
 }
 
 .clock-bar-meta {
@@ -563,24 +677,23 @@ input[type='time'] {
   justify-content: space-between;
   font-family: var(--mono);
   font-size: 10.5px;
-  color: var(--paper-faint);
-  letter-spacing: 0.08em;
+  color: var(--faint);
+  letter-spacing: 0.06em;
 }
 
 .stat-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1px;
-  background: var(--line);
-  border: 1px solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
+  padding: 1px 0 0 1px;
 }
 
+/* tax サイトの .fgrid と同じ、罫線を重ねて詰めるグリッド */
 .stat {
-  background: var(--ink-800);
-  padding: 15px 8px;
+  border: 1px solid var(--line);
+  margin: 0 0 -1px -1px;
+  padding: 16px 8px;
   text-align: center;
+  min-width: 0;
 }
 
 .stat .v {
@@ -590,12 +703,14 @@ input[type='time'] {
   font-variant-numeric: tabular-nums;
   display: block;
   line-height: 1.3;
+  color: var(--pale);
 }
 
 .stat .k {
   font-size: 10.5px;
-  color: var(--paper-faint);
-  letter-spacing: 0.08em;
+  color: var(--faint);
+  letter-spacing: 0.1em;
+  font-weight: 700;
 }
 
 /* 人生カレンダー：1マス＝1週 */
@@ -608,53 +723,55 @@ input[type='time'] {
 
 .life-grid i {
   aspect-ratio: 1;
-  border-radius: 0.5px;
-  background: rgba(232, 226, 214, 0.07);
+  background: rgba(169, 196, 228, 0.055);
 }
 
 .life-grid i.past {
-  background: rgba(232, 226, 214, 0.3);
+  background: var(--blu);
+  opacity: 0.85;
 }
 
 .life-grid i.now {
-  background: var(--brass-bright);
-  box-shadow: 0 0 5px 1.5px rgba(240, 207, 122, 0.75);
-  animation: blink 2s ease-in-out infinite;
+  background: var(--pale);
+  border-radius: 0 100% 0 100%;
+  box-shadow: 0 0 6px 2px rgba(220, 230, 242, 0.6);
+  animation: blink 2.4s ease-in-out infinite;
 }
 
 @keyframes blink {
   50% {
-    opacity: 0.35;
+    opacity: 0.4;
   }
 }
 
 .creed {
-  font-family: var(--display);
   font-size: 14.5px;
-  line-height: 2.1;
-  letter-spacing: 0.06em;
-  color: var(--paper-dim);
+  font-weight: 500;
+  line-height: 2.2;
+  letter-spacing: 0.05em;
+  color: var(--mute);
   text-align: center;
   padding: 6px 4px;
 }
 
 .creed strong {
-  color: var(--brass-bright);
-  font-weight: 500;
+  color: var(--pale);
+  font-weight: 700;
 }
 
 /* --- 夢カード ------------------------------------------------ */
 
 .dream {
+  position: relative;
   display: block;
   width: 100%;
   text-align: left;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
-  background: linear-gradient(168deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.016));
+  background: rgba(169, 196, 228, 0.04);
   margin-bottom: 12px;
-  transition: transform 0.14s ease, border-color 0.18s ease;
+  transition: transform 0.14s ease, border-color 0.2s ease;
 }
 
 .dream:active {
@@ -662,7 +779,7 @@ input[type='time'] {
 }
 
 .dream.is-achieved {
-  opacity: 0.55;
+  opacity: 0.5;
 }
 
 .dream-photo {
@@ -676,49 +793,56 @@ input[type='time'] {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(7, 9, 17, 0.1), rgba(7, 9, 17, 0.86));
+  background: linear-gradient(180deg, rgba(4, 16, 28, 0.1), rgba(4, 16, 28, 0.88));
 }
 
 .dream-body {
-  padding: 14px 15px 15px;
+  position: relative;
+  padding: 15px 16px 16px;
 }
 
 .dream-top {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin-bottom: 7px;
+  margin-bottom: 8px;
 }
 
 .dream-field {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 10.5px;
+  font-weight: 700;
   letter-spacing: 0.1em;
-  padding: 2px 8px;
-  border-radius: 999px;
-  border: 1px solid currentColor;
+}
+
+.dream-field .mark {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
 }
 
 .dream-prio {
   font-family: var(--mono);
   font-size: 10.5px;
-  color: var(--paper-faint);
-  letter-spacing: 0.1em;
+  color: var(--faint);
+  letter-spacing: 0.08em;
 }
 
 .dream h3 {
   margin: 0 0 8px;
-  font-family: var(--display);
-  font-size: 16.5px;
-  font-weight: 500;
-  line-height: 1.55;
-  letter-spacing: 0.03em;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
 }
 
 .dream-detail {
   font-size: 12.5px;
-  color: var(--paper-dim);
-  line-height: 1.8;
-  margin: 0 0 10px;
+  color: var(--mute);
+  line-height: 1.85;
+  margin: 0 0 11px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -731,12 +855,12 @@ input[type='time'] {
   gap: 6px 14px;
   font-family: var(--mono);
   font-size: 11px;
-  color: var(--paper-faint);
-  letter-spacing: 0.04em;
+  color: var(--faint);
+  letter-spacing: 0.03em;
 }
 
 .dream-meta .accent {
-  color: var(--brass);
+  color: var(--sky);
 }
 
 .dream-meta .overdue {
@@ -744,10 +868,9 @@ input[type='time'] {
 }
 
 .progress {
-  margin-top: 11px;
-  height: 2px;
-  background: rgba(255, 255, 255, 0.08);
-  border-radius: 2px;
+  margin-top: 12px;
+  height: 3px;
+  background: rgba(169, 196, 228, 0.1);
   overflow: hidden;
 }
 
@@ -760,13 +883,13 @@ input[type='time'] {
 
 .limit-note {
   font-size: 11.5px;
-  color: var(--paper-faint);
-  line-height: 1.7;
+  color: var(--faint);
+  line-height: 1.8;
   margin: -2px 0 14px;
 }
 
 .limit-note.over {
-  color: var(--brass);
+  color: var(--sky);
 }
 
 /* --- 夢の詳細 ------------------------------------------------ */
@@ -782,40 +905,42 @@ input[type='time'] {
   display: flex;
   align-items: baseline;
   justify-content: center;
-  gap: 10px;
-  padding: 16px;
-  border: 1px dashed var(--line-strong);
-  border-radius: var(--radius);
+  gap: 12px;
+  padding: 18px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
   margin-bottom: 16px;
+  background: rgba(169, 196, 228, 0.035);
 }
 
 .metric-box .now {
   font-family: var(--mono);
   font-size: 26px;
   font-weight: 300;
-  color: var(--paper);
+  color: var(--ink);
 }
 
 .metric-box .arrow {
-  color: var(--paper-faint);
+  color: var(--faint);
 }
 
 .metric-box .goal {
   font-family: var(--mono);
   font-size: 26px;
   font-weight: 300;
-  color: var(--brass-bright);
+  color: var(--pale);
 }
 
 .metric-box .unit {
   font-size: 13px;
-  color: var(--paper-dim);
+  color: var(--mute);
 }
 
 .metric-box .lab {
   font-size: 11px;
-  color: var(--paper-faint);
+  color: var(--faint);
   letter-spacing: 0.1em;
+  font-weight: 700;
 }
 
 .ms-list {
@@ -827,7 +952,7 @@ input[type='time'] {
 .ms-list li {
   display: flex;
   align-items: flex-start;
-  gap: 11px;
+  gap: 12px;
   padding: 11px 0;
   border-bottom: 1px solid var(--line);
 }
@@ -840,8 +965,9 @@ input[type='time'] {
   flex: 0 0 auto;
   width: 20px;
   height: 20px;
-  margin-top: 2px;
-  border-radius: 5px;
+  margin-top: 3px;
+  /* 1角だけ落とした角丸正方形 */
+  border-radius: 4px 4px 4px 100%;
   border: 1.4px solid var(--line-strong);
   display: flex;
   align-items: center;
@@ -852,17 +978,17 @@ input[type='time'] {
 .tick svg {
   width: 11px;
   height: 11px;
-  stroke: #201703;
+  stroke: var(--navy);
   fill: none;
-  stroke-width: 2.6;
+  stroke-width: 2.8;
   stroke-linecap: round;
   stroke-linejoin: round;
   opacity: 0;
 }
 
 .tick[aria-pressed='true'] {
-  background: var(--brass-bright);
-  border-color: var(--brass-bright);
+  background: var(--sky);
+  border-color: var(--sky);
 }
 
 .tick[aria-pressed='true'] svg {
@@ -872,56 +998,61 @@ input[type='time'] {
 .ms-text {
   flex: 1;
   font-size: 13.5px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .ms-text.done {
-  color: var(--paper-faint);
+  color: var(--faint);
   text-decoration: line-through;
 }
 
 /* --- ピラミッド ---------------------------------------------- */
 
 .apex {
+  position: relative;
+  display: block;
+  width: 100%;
   text-align: center;
-  padding: 18px 16px 20px;
-  border: 1px solid rgba(210, 166, 60, 0.34);
-  border-radius: var(--radius);
-  background: radial-gradient(120% 130% at 50% 0%, rgba(210, 166, 60, 0.16), transparent 68%);
-  margin-bottom: 14px;
+  padding: 20px 18px 22px;
+  border: 1px solid var(--line-strong);
+  border-top: 2px solid var(--sky);
+  background: linear-gradient(180deg, rgba(45, 95, 168, 0.22), transparent 78%);
+  margin-bottom: 16px;
+  overflow: hidden;
 }
 
 .apex .k {
-  font-family: var(--mono);
-  font-size: 9.5px;
-  letter-spacing: 0.3em;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: var(--sky);
 }
 
 .apex .v {
-  font-family: var(--display);
-  font-size: 17px;
-  line-height: 1.9;
+  font-size: 16.5px;
+  font-weight: 700;
+  line-height: 2;
   letter-spacing: 0.06em;
-  margin-top: 10px;
+  margin-top: 12px;
   white-space: pre-wrap;
 }
 
 .apex .v.placeholder {
-  color: var(--paper-faint);
+  color: var(--faint);
   font-size: 13.5px;
+  font-weight: 400;
 }
 
 .pyramid {
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 8px;
 }
 
 .tier {
   display: flex;
-  gap: 9px;
+  gap: 8px;
   align-items: stretch;
 }
 
@@ -934,14 +1065,15 @@ input[type='time'] {
 }
 
 .pblock {
+  position: relative;
   flex: 1;
   min-width: 0;
-  padding: 13px 12px;
-  border-radius: var(--radius-sm);
+  padding: 14px 12px;
   border: 1px solid var(--line-strong);
-  background: linear-gradient(168deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.014));
+  border-top-width: 2px;
+  background: rgba(169, 196, 228, 0.045);
   text-align: left;
-  transition: transform 0.14s ease;
+  transition: transform 0.14s ease, background 0.2s ease;
 }
 
 .pblock:active {
@@ -950,73 +1082,83 @@ input[type='time'] {
 
 .pblock.empty-field {
   border-style: dashed;
-  opacity: 0.6;
+  border-top-style: solid;
+  opacity: 0.55;
 }
 
 .pblock .name {
-  font-family: var(--display);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.05em;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
 }
 
-.pblock .name .dot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
+.pblock .name .mark {
+  width: 9px;
+  height: 9px;
   flex: 0 0 auto;
 }
 
-.pblock .n {
+.pblock .n-count {
   font-family: var(--mono);
   font-size: 10px;
-  color: var(--paper-faint);
+  color: var(--faint);
   letter-spacing: 0.1em;
   margin-top: 5px;
 }
 
 .pblock ul {
   list-style: none;
-  margin: 8px 0 0;
+  margin: 9px 0 0;
   padding: 0;
 }
 
 .pblock li {
   font-size: 11px;
-  line-height: 1.65;
-  color: var(--paper-dim);
+  line-height: 1.7;
+  color: var(--mute);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  padding-left: 10px;
+  position: relative;
 }
 
 .pblock li::before {
-  content: '・';
-  color: var(--paper-faint);
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 4px;
+  height: 4px;
+  background: var(--faint);
 }
 
 .tier-label {
-  font-family: var(--mono);
   font-size: 9px;
-  letter-spacing: 0.28em;
+  font-weight: 700;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: var(--paper-faint);
+  color: var(--faint);
   text-align: center;
-  margin: 2px 0 -4px;
+  margin: 4px 0 -3px;
 }
 
 .balance-note {
-  margin-top: 18px;
-  padding: 14px 16px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(210, 166, 60, 0.3);
-  background: rgba(210, 166, 60, 0.06);
+  margin-top: 20px;
+  padding: 16px 18px;
+  border: 1px solid var(--line-strong);
+  border-left: 3px solid var(--blu);
+  background: rgba(45, 95, 168, 0.1);
   font-size: 12.5px;
-  line-height: 1.9;
-  color: var(--paper-dim);
+  line-height: 2;
+  color: var(--mute);
+}
+
+.balance-note strong {
+  color: var(--pale);
 }
 
 /* --- 未来年表 ------------------------------------------------ */
@@ -1042,16 +1184,16 @@ input[type='time'] {
   height: 20px;
 }
 
+/* 年の節目は葉型 */
 .year::after {
   content: '';
   position: absolute;
   left: 54px;
-  top: 6px;
+  top: 5px;
   width: 9px;
   height: 9px;
-  border-radius: 50%;
-  background: var(--ink-900);
-  border: 1.5px solid var(--brass);
+  background: var(--sky);
+  border-radius: 0 100% 0 100%;
 }
 
 .year-head {
@@ -1067,7 +1209,7 @@ input[type='time'] {
   font-family: var(--mono);
   font-size: 15px;
   font-weight: 400;
-  color: var(--brass-bright);
+  color: var(--pale);
   display: block;
   line-height: 1.2;
 }
@@ -1075,14 +1217,14 @@ input[type='time'] {
 .year-head .age {
   font-family: var(--mono);
   font-size: 9.5px;
-  color: var(--paper-faint);
+  color: var(--faint);
 }
 
 .year-item {
   display: block;
   width: 100%;
   text-align: left;
-  padding: 9px 0;
+  padding: 10px 0;
   border-bottom: 1px solid var(--line);
 }
 
@@ -1092,29 +1234,40 @@ input[type='time'] {
 
 .year-item .t {
   font-size: 13.5px;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
 .year-item .m {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--mono);
   font-size: 10.5px;
-  color: var(--paper-faint);
-  letter-spacing: 0.06em;
-  margin-top: 3px;
+  color: var(--faint);
+  letter-spacing: 0.05em;
+  margin-top: 4px;
+}
+
+.year-item .m .mark {
+  width: 7px;
+  height: 7px;
+  flex-shrink: 0;
 }
 
 .year-item .m .fld {
-  padding-right: 9px;
+  padding-right: 5px;
 }
 
 /* --- 習慣（DWMY） -------------------------------------------- */
 
 .today-card {
-  border: 1px solid rgba(210, 166, 60, 0.3);
-  background: radial-gradient(130% 100% at 0% 0%, rgba(210, 166, 60, 0.11), transparent 62%);
-  border-radius: var(--radius);
-  padding: 16px 16px 6px;
-  margin-bottom: 8px;
+  position: relative;
+  border: 1px solid var(--line-strong);
+  border-top: 2px solid var(--sky);
+  background: linear-gradient(180deg, rgba(45, 95, 168, 0.16), transparent 70%);
+  padding: 17px 16px 6px;
+  margin-bottom: 10px;
+  overflow: hidden;
 }
 
 .today-card .head {
@@ -1125,15 +1278,15 @@ input[type='time'] {
 }
 
 .today-card .head .t {
-  font-family: var(--display);
-  font-size: 14px;
-  letter-spacing: 0.12em;
+  font-size: 13.5px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
 }
 
-.today-card .head .n {
+.today-card .head .n-done {
   font-family: var(--mono);
   font-size: 12px;
-  color: var(--brass-bright);
+  color: var(--pale);
 }
 
 .habit {
@@ -1155,19 +1308,19 @@ input[type='time'] {
 
 .habit-main .t {
   font-size: 13.5px;
-  line-height: 1.5;
+  line-height: 1.55;
 }
 
 .habit-main .t.done {
-  color: var(--paper-faint);
+  color: var(--faint);
   text-decoration: line-through;
 }
 
-.habit-main .s {
+.habit-main .s-desc {
   font-family: var(--mono);
   font-size: 10.5px;
-  color: var(--paper-faint);
-  letter-spacing: 0.06em;
+  color: var(--faint);
+  letter-spacing: 0.05em;
   margin-top: 2px;
 }
 
@@ -1175,33 +1328,33 @@ input[type='time'] {
   flex: 0 0 auto;
   width: 22px;
   height: 22px;
-  border-radius: 6px;
+  border-radius: 4px 4px 4px 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-family: var(--mono);
   font-size: 11px;
   border: 1px solid var(--line-strong);
-  color: var(--paper-dim);
+  color: var(--mute);
 }
 
 .streak {
   font-family: var(--mono);
   font-size: 10.5px;
-  color: var(--brass);
+  color: var(--sky);
   flex: 0 0 auto;
 }
 
 .week-strip {
   display: flex;
   gap: 5px;
-  margin-top: 12px;
+  margin-top: 13px;
+  padding-bottom: 12px;
 }
 
 .week-strip button {
   flex: 1;
   padding: 7px 0 8px;
-  border-radius: 8px;
   border: 1px solid var(--line);
   text-align: center;
   line-height: 1.3;
@@ -1209,18 +1362,18 @@ input[type='time'] {
 
 .week-strip button .d {
   font-size: 9.5px;
-  color: var(--paper-faint);
+  color: var(--faint);
   display: block;
 }
 
-.week-strip button .n {
+.week-strip button .n-day {
   font-family: var(--mono);
   font-size: 12px;
 }
 
 .week-strip button[aria-pressed='true'] {
-  border-color: var(--brass);
-  background: rgba(210, 166, 60, 0.1);
+  border-color: var(--sky);
+  background: rgba(169, 196, 228, 0.12);
 }
 
 .weekday-picker {
@@ -1231,38 +1384,38 @@ input[type='time'] {
 .weekday-picker button {
   flex: 1;
   padding: 9px 0;
-  border-radius: 8px;
   border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
   font-size: 12px;
-  color: var(--paper-dim);
+  font-weight: 700;
+  color: var(--mute);
 }
 
 .weekday-picker button[aria-pressed='true'] {
-  background: var(--brass);
-  border-color: var(--brass);
-  color: #201703;
-  font-weight: 700;
+  background: var(--sky);
+  border-color: var(--sky);
+  color: var(--navy);
 }
 
 /* --- 設定 ---------------------------------------------------- */
 
 .notice {
   padding: 13px 15px;
-  border-radius: var(--radius-sm);
-  border: 1px solid rgba(212, 97, 79, 0.4);
-  background: rgba(212, 97, 79, 0.1);
+  border: 1px solid rgba(217, 122, 108, 0.4);
+  border-left: 3px solid var(--danger);
+  background: rgba(217, 122, 108, 0.1);
   font-size: 12.5px;
-  line-height: 1.8;
+  line-height: 1.85;
   margin-bottom: 16px;
 }
 
 .about {
   font-size: 11.5px;
   line-height: 2;
-  color: var(--paper-faint);
+  color: var(--faint);
   padding: 4px 2px;
 }
 
 .about a {
-  color: var(--paper-dim);
+  color: var(--sky);
 }

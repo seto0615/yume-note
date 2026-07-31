@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import type { Settings } from '../types'
 import { addYears, ageAt, comma, diffDays, parseKey, todayKey } from '../lib/date'
+import Geo, { HERO_TILES } from '../components/Geo'
 
 interface Props {
   settings: Settings
@@ -45,6 +46,7 @@ export default function ClockView({ settings, onOpenSettings }: Props) {
   if (!calc) {
     return (
       <div className="empty">
+        <Geo tiles={HERO_TILES} cols={4} size={30} gap={4} />
         <span className="quote">時間は、命そのもの。</span>
         まず生年月日と想定寿命を登録すると、
         <br />
@@ -63,6 +65,8 @@ export default function ClockView({ settings, onOpenSettings }: Props) {
   return (
     <>
       <div className="clock-hero">
+        <Geo className="left" tiles={['b', 's o', 'p', 'n br']} cols={1} size={11} gap={3} />
+        <Geo className="right" tiles={['p bl', 'b', 's o', 'n']} cols={1} size={11} gap={3} />
         <div className="label">Days Remaining</div>
         <div className="days">{comma(Math.max(0, calc.leftDays))}</div>
         <div className="unit">日</div>

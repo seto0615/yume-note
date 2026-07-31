@@ -9,6 +9,7 @@ import HabitsView from './views/HabitsView'
 import SettingsView from './views/SettingsView'
 import DreamDetail from './components/DreamDetail'
 import DreamEditor from './components/DreamEditor'
+import Geo from './components/Geo'
 import {
   IconClock,
   IconGear,
@@ -56,14 +57,17 @@ export default function App() {
   return (
     <div className="shell">
       <header className="header">
-        <h1>
-          <span className="eyebrow">{current.eyebrow}</span>
-          {current.title}
-        </h1>
+        <div className="header-title">
+          <Geo size={10} gap={2} />
+          <h1>
+            <span className="eyebrow">{current.eyebrow}</span>
+            {current.title}
+          </h1>
+        </div>
         <button
           onClick={() => setSettingsOpen(true)}
           aria-label="設定を開く"
-          style={{ color: 'var(--paper-faint)', paddingBottom: 4 }}
+          style={{ color: 'var(--mute)', paddingBottom: 4 }}
         >
           <IconGear />
         </button>

@@ -4,6 +4,7 @@ import { FIELDS, FIELD_LIMIT, fieldOf } from '../lib/fields'
 import { daysUntil, formatDate } from '../lib/date'
 import DreamEditor, { blankDream } from '../components/DreamEditor'
 import DreamDetail from '../components/DreamDetail'
+import Geo, { HERO_TILES } from '../components/Geo'
 
 interface Props {
   dreams: Dream[]
@@ -62,7 +63,7 @@ export default function DreamsView({
         <button
           className="chip"
           aria-pressed={field === 'all'}
-          style={field === 'all' ? { background: 'var(--brass-bright)' } : undefined}
+          style={field === 'all' ? { background: 'var(--pale)' } : undefined}
           onClick={() => onFieldChange('all')}
         >
           すべて<span className="count">{dreams.length}</span>
@@ -75,7 +76,7 @@ export default function DreamsView({
             style={field === f.id ? { background: f.color } : undefined}
             onClick={() => onFieldChange(f.id)}
           >
-            <span className="dot" style={{ background: f.color }} />
+            <span className={`mark ${f.shape}`} style={{ background: f.color }} />
             {f.short}
             <span className="count">{counts[f.id] ?? 0}</span>
           </button>
@@ -91,6 +92,7 @@ export default function DreamsView({
 
       {list.length === 0 ? (
         <div className="empty">
+          <Geo tiles={HERO_TILES} cols={4} size={30} gap={4} />
           <span className="quote">まだ何も書かれていない。</span>
           実現できるかは考えず、
           <br />
@@ -165,6 +167,7 @@ function DreamCard({ dream, onOpen }: { dream: Dream; onOpen: () => void }) {
       <div className="dream-body">
         <div className="dream-top">
           <span className="dream-field" style={{ color: f.color }}>
+            <span className={`mark ${f.shape}`} style={{ background: f.color }} />
             {f.short}
           </span>
           <span className="dream-prio">優先 {dream.priority}</span>

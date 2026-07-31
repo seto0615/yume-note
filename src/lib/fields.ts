@@ -10,6 +10,11 @@ export interface FieldDef {
   hint: string
   level: PyramidLevel | null
   color: string
+  /**
+   * 幾何学タイルの形。色だけに頼らず形でも分野を識別できるようにする。
+   * '' = 正方形 / 'o' = 円 / 'tl','tr','bl','br' = 1/4円 / 'leaf' = 葉型
+   */
+  shape: string
 }
 
 /**
@@ -23,7 +28,8 @@ export const FIELDS: FieldDef[] = [
     short: '経済',
     hint: '目に見える形で手に入れたいもの、物理的なもの',
     level: 'result',
-    color: '#D2A63C',
+    color: '#C8AE6E',
+    shape: 'o',
   },
   {
     id: 'private',
@@ -31,7 +37,8 @@ export const FIELDS: FieldDef[] = [
     short: '家庭',
     hint: '理想の家庭／プライベートな夢',
     level: 'realize',
-    color: '#DC7E63',
+    color: '#CE8B82',
+    shape: 'leaf',
   },
   {
     id: 'social',
@@ -39,7 +46,8 @@ export const FIELDS: FieldDef[] = [
     short: '仕事',
     hint: '社会との関わり方や、職業／ライフワーク',
     level: 'realize',
-    color: '#5B7FD4',
+    color: '#2D5FA8',
+    shape: 'br',
   },
   {
     id: 'health',
@@ -47,7 +55,8 @@ export const FIELDS: FieldDef[] = [
     short: '健康',
     hint: '健康／体／美容の状態',
     level: 'foundation',
-    color: '#6FAE7C',
+    color: '#6FB3A0',
+    shape: '',
   },
   {
     id: 'knowledge',
@@ -55,7 +64,8 @@ export const FIELDS: FieldDef[] = [
     short: '教養',
     hint: '身につけたい専門知識／資格／教養',
     level: 'foundation',
-    color: '#4E9FC4',
+    color: '#5B93D6',
+    shape: 'tr',
   },
   {
     id: 'mind',
@@ -63,7 +73,8 @@ export const FIELDS: FieldDef[] = [
     short: '心',
     hint: '心の持ち方／あり方／精神状態',
     level: 'foundation',
-    color: '#9583D8',
+    color: '#8F8FD4',
+    shape: 'tl',
   },
   {
     id: 'unsorted',
@@ -71,7 +82,8 @@ export const FIELDS: FieldDef[] = [
     short: '未分類',
     hint: 'まだ分野を決めていない夢',
     level: null,
-    color: '#7A8090',
+    color: '#7D8FA5',
+    shape: 'bl',
   },
 ]
 

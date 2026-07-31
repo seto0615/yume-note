@@ -44,21 +44,21 @@ export default function PyramidView({ dreams, settings, onJumpToField, onOpenSet
         <div className="tier-label">{LEVEL_LABEL.result}</div>
         <div className="tier tier-1">
           {fieldsOfLevel('result').map((f) => (
-            <Block key={f.id} id={f.id} name={f.short} color={f.color} dreams={byField[f.id] ?? []} onOpen={onJumpToField} />
+            <Block key={f.id} id={f.id} name={f.short} color={f.color} shape={f.shape} dreams={byField[f.id] ?? []} onOpen={onJumpToField} />
           ))}
         </div>
 
         <div className="tier-label">{LEVEL_LABEL.realize}</div>
         <div className="tier tier-2">
           {fieldsOfLevel('realize').map((f) => (
-            <Block key={f.id} id={f.id} name={f.short} color={f.color} dreams={byField[f.id] ?? []} onOpen={onJumpToField} />
+            <Block key={f.id} id={f.id} name={f.short} color={f.color} shape={f.shape} dreams={byField[f.id] ?? []} onOpen={onJumpToField} />
           ))}
         </div>
 
         <div className="tier-label">{LEVEL_LABEL.foundation}</div>
         <div className="tier">
           {fieldsOfLevel('foundation').map((f) => (
-            <Block key={f.id} id={f.id} name={f.short} color={f.color} dreams={byField[f.id] ?? []} onOpen={onJumpToField} />
+            <Block key={f.id} id={f.id} name={f.short} color={f.color} shape={f.shape} dreams={byField[f.id] ?? []} onOpen={onJumpToField} />
           ))}
         </div>
       </div>
@@ -72,9 +72,7 @@ export default function PyramidView({ dreams, settings, onJumpToField, onOpenSet
           </>
         ) : (
           <>
-            <strong style={{ color: 'var(--brass-bright)' }}>
-              {emptyFields.map((f) => f.name).join('・')}
-            </strong>
+            <strong>{emptyFields.map((f) => f.name).join('・')}</strong>
             が空白です。
             <br />
             バランスのとれた全人になってこそ、人生の究極の目標は達成される。この分野で自分が本当に望むこと・果たすべき責務を、もう一度考えてみる。
@@ -105,12 +103,14 @@ function Block({
   id,
   name,
   color,
+  shape,
   dreams,
   onOpen,
 }: {
   id: FieldId
   name: string
   color: string
+  shape: string
   dreams: Dream[]
   onOpen: (f: FieldId) => void
 }) {
@@ -120,10 +120,10 @@ function Block({
       onClick={() => onOpen(id)}
     >
       <div className="name">
-        <span className="dot" style={{ background: color }} />
+        <span className={`mark ${shape}`} style={{ background: color }} />
         {name}
       </div>
-      <div className="n">{dreams.length} 件</div>
+      <div className="n-count">{dreams.length} 件</div>
       <ul>
         {dreams.slice(0, 3).map((d) => (
           <li key={d.id}>{d.title}</li>

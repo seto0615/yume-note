@@ -128,7 +128,7 @@ export default function HabitsView({
       <div className="today-card">
         <div className="head">
           <span className="t">{dateKey === todayKey() ? '今日やること' : 'この日にやること'}</span>
-          <span className="n">
+          <span className="n-done">
             {doneCount}/{due.length}
           </span>
         </div>
@@ -150,7 +150,7 @@ export default function HabitsView({
               </button>
               <div className="habit-main">
                 <div className={`t${h.log[dateKey] ? ' done' : ''}`}>{h.title}</div>
-                <div className="s">{describe(h)}</div>
+                <div className="s-desc">{describe(h)}</div>
               </div>
               {h.cycle === 'D' && streakOf(h) > 0 && <span className="streak">{streakOf(h)}日連続</span>}
             </div>
@@ -165,7 +165,7 @@ export default function HabitsView({
               onClick={() => setDateKey(w.key)}
             >
               <span className="d">{WEEKDAY_LABELS[w.date.getDay()]}</span>
-              <span className="n">{w.date.getDate()}</span>
+              <span className="n-day">{w.date.getDate()}</span>
             </button>
           ))}
         </div>
@@ -194,7 +194,7 @@ export default function HabitsView({
                       onClick={() => setEditing(h)}
                     >
                       <div className="t">{h.title}</div>
-                      <div className="s">
+                      <div className="s-desc">
                         {describe(h)}
                         {linked && ` ／ ${linked.title}`}
                       </div>

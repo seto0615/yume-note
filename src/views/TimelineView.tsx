@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import type { Dream, Settings } from '../types'
 import { fieldOf } from '../lib/fields'
 import { ageAt, formatShort, parseKey } from '../lib/date'
+import Geo, { HERO_TILES } from '../components/Geo'
 
 interface Props {
   dreams: Dream[]
@@ -39,6 +40,7 @@ export default function TimelineView({ dreams, settings, onOpen }: Props) {
   if (years.length === 0) {
     return (
       <div className="empty">
+        <Geo tiles={HERO_TILES} cols={4} size={30} gap={4} />
         <span className="quote">期限のない夢は、願望のまま終わる。</span>
         夢に「実現する日」を入れると、
         <br />
@@ -70,6 +72,7 @@ export default function TimelineView({ dreams, settings, onOpen }: Props) {
                   {d.title}
                 </div>
                 <div className="m">
+                  <span className={`mark ${f.shape}`} style={{ background: f.color }} />
                   <span className="fld" style={{ color: f.color }}>
                     {f.short}
                   </span>

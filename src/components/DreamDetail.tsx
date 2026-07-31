@@ -29,10 +29,10 @@ export default function DreamDetail({ dream, onChange, onEdit, onClose }: Props)
 
       <h3
         style={{
-          fontFamily: 'var(--display)',
-          fontSize: 20,
-          fontWeight: 500,
+          fontSize: 19,
+          fontWeight: 700,
           lineHeight: 1.7,
+          letterSpacing: '0.04em',
           margin: '0 0 12px',
         }}
       >
@@ -40,7 +40,10 @@ export default function DreamDetail({ dream, onChange, onEdit, onClose }: Props)
       </h3>
 
       <div className="dream-meta" style={{ marginBottom: 18 }}>
-        <span style={{ color: field.color }}>{field.short}</span>
+        <span style={{ color: field.color, display: 'flex', alignItems: 'center', gap: 6 }}>
+          <span className={`mark ${field.shape}`} style={{ background: field.color, width: 8, height: 8 }} />
+          {field.short}
+        </span>
         <span>優先 {dream.priority}</span>
         {dream.targetDate && (
           <>
