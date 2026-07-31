@@ -53,6 +53,12 @@ GitHub Pages は `main` ブランチの `docs/` を配信元にしている。UI
 
 技術構成: React 19 + TypeScript + Vite。ランタイム依存は React のみ。
 
+## デザイン
+
+`tax.hatenabase.jp` の幾何学紋様を下敷きにした暗色版。
+はてなベースの幾何学4トーン（navy `#0A2846` / blu `#2D5FA8` / sky `#A9C4E4` / pale `#DCE6F2`）と、
+正方形・円・1/4円・葉型のタイル語彙だけで装飾している。6分野は色に加えてタイルの形でも識別できる。
+
 ## ライセンス・出典
 
 MIT License（[LICENSE](./LICENSE)）。
