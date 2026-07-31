@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="18%" r="88%">
+      <stop offset="0%" stop-color="#1b2233"/>
+      <stop offset="60%" stop-color="#0c1019"/>
+      <stop offset="100%" stop-color="#070911"/>
+    </radialGradient>
+    <linearGradient id="brass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#f0cf7a"/>
+      <stop offset="100%" stop-color="#c0912b"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+
+  <!-- 人生時計の文字盤 -->
+  <circle cx="256" cy="256" r="168" fill="none" stroke="url(#brass)" stroke-width="7" opacity="0.5"/>
+  <!-- 経過した時間の弧 -->
+  <path d="M256 88a168 168 0 0 1 118.8 286.8" fill="none" stroke="url(#brass)" stroke-width="14" stroke-linecap="round"/>
+
+  <!-- 夢・人生ピラミッド 3段 -->
+  <path d="M256 150 L332 356 H180 Z" fill="none" stroke="url(#brass)" stroke-width="12" stroke-linejoin="round"/>
+  <path d="M231 218h50M212 287h88" stroke="url(#brass)" stroke-width="9" stroke-linecap="round" opacity="0.75"/>
+
+  <!-- 頂点の星 -->
+  <circle cx="256" cy="124" r="15" fill="#f4dc9c"/>
+</svg>

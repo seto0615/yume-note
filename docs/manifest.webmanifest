@@ -1,0 +1,17 @@
+{
+  "name": "夢ノート — 人生時計と夢のマネジメント",
+  "short_name": "夢ノート",
+  "description": "人生時計・やりたいことリスト・夢＆人生ピラミッド・未来年表・DWMYリスト。夢を数字と期限に落とし込む、ひとり用の手帳アプリ。",
+  "lang": "ja",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#070911",
+  "theme_color": "#070911",
+  "icons": [
+    { "src": "./icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "./icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
