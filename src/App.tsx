@@ -15,7 +15,9 @@ import {
   IconGear,
   IconHabit,
   IconList,
+  IconMoon,
   IconPyramid,
+  IconSun,
   IconTimeline,
 } from './components/icons'
 
@@ -47,6 +49,15 @@ export default function App() {
     window.scrollTo(0, 0)
   }, [tab])
 
+  // テーマは html 要素の data-theme で切り替える。ブラウザUIの色も合わせる
+  const theme = store.data.settings.theme
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', theme === 'light' ? '#ffffff' : '#04101c')
+  }, [theme])
+
   const peekDream = peek ? (store.data.dreams.find((d) => d.id === peek) ?? null) : null
 
   const jumpToField = (f: FieldId) => {
@@ -64,16 +75,31 @@ export default function App() {
             {current.title}
           </h1>
         </div>
-        <button
-          onClick={() => setSettingsOpen(true)}
-          aria-label="設定を開く"
-          style={{ color: 'var(--mute)', paddingBottom: 4 }}
-        >
-          <IconGear />
-        </button>
+        <nav className="tabbar">
+          {TABS.map(({ id, label, Icon }) => (
+            <button key={id} aria-current={tab === id} onClick={() => setTab(id)}>
+              <Icon />
+              <span>{label}</span>
+            </button>
+          ))}
+        </nav>
+
+        <div className="header-actions">
+          <button
+            className="icon-btn"
+            onClick={() => store.setSettings({ theme: theme === 'dark' ? 'light' : 'dark' })}
+            aria-label={theme === 'dark' ? '白い背景に切り替える' : '黒い背景に切り替える'}
+            title={theme === 'dark' ? '白い背景に切り替える' : '黒い背景に切り替える'}
+          >
+            {theme === 'dark' ? <IconSun /> : <IconMoon />}
+          </button>
+          <button className="icon-btn" onClick={() => setSettingsOpen(true)} aria-label="設定を開く">
+            <IconGear />
+          </button>
+        </div>
       </header>
 
-      <main className="main">
+      <main className={`main view-${tab}`}>
         {store.error && <div className="notice">{store.error}</div>}
 
         {tab === 'clock' && (
@@ -116,15 +142,6 @@ export default function App() {
           />
         )}
       </main>
-
-      <nav className="tabbar">
-        {TABS.map(({ id, label, Icon }) => (
-          <button key={id} aria-current={tab === id} onClick={() => setTab(id)}>
-            <Icon />
-            <span>{label}</span>
-          </button>
-        ))}
-      </nav>
 
       {settingsOpen && (
         <SettingsView

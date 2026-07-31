@@ -57,8 +57,32 @@ export default function SettingsView({ data, onChange, onReplaceAll, onClose }: 
       </div>
 
       <div className="section-label" style={{ marginTop: 8 }}>
-        人生時計
+        背景
       </div>
+
+      <div className="field">
+        <div className="theme-picker">
+          <button
+            type="button"
+            aria-pressed={settings.theme === 'dark'}
+            onClick={() => onChange({ theme: 'dark' })}
+          >
+            <span className="swatch" style={{ background: '#04101c' }} />
+            黒
+          </button>
+          <button
+            type="button"
+            aria-pressed={settings.theme === 'light'}
+            onClick={() => onChange({ theme: 'light' })}
+          >
+            <span className="swatch" style={{ background: '#ffffff' }} />
+            白
+          </button>
+        </div>
+        <div className="hint">ヘッダーのアイコンからも切り替えられます。</div>
+      </div>
+
+      <div className="section-label">人生時計</div>
 
       <div className="field">
         <label htmlFor="set-birth">生年月日</label>

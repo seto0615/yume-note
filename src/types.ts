@@ -65,8 +65,12 @@ export interface Habit {
   createdAt: number
 }
 
+export type Theme = 'dark' | 'light'
+
 export interface Settings {
   name: string
+  /** 背景テーマ */
+  theme: Theme
   /** YYYY-MM-DD */
   birthDate: string
   /** 想定寿命（年） */

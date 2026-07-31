@@ -63,7 +63,7 @@ export default function DreamsView({
         <button
           className="chip"
           aria-pressed={field === 'all'}
-          style={field === 'all' ? { background: 'var(--pale)' } : undefined}
+          style={field === 'all' ? { background: 'var(--sky)' } : undefined}
           onClick={() => onFieldChange('all')}
         >
           すべて<span className="count">{dreams.length}</span>
@@ -99,7 +99,11 @@ export default function DreamsView({
           思いつく限り書き出すところから。
         </div>
       ) : (
-        list.map((d) => <DreamCard key={d.id} dream={d} onOpen={() => setViewing(d.id)} />)
+        <div className="dream-grid">
+          {list.map((d) => (
+            <DreamCard key={d.id} dream={d} onOpen={() => setViewing(d.id)} />
+          ))}
+        </div>
       )}
 
       <button

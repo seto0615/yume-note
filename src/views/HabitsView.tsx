@@ -124,7 +124,8 @@ export default function HabitsView({
   }
 
   return (
-    <>
+    <div className="v-habits">
+      <section className="habits-today">
       <div className="today-card">
         <div className="head">
           <span className="t">{dateKey === todayKey() ? '今日やること' : 'この日にやること'}</span>
@@ -171,6 +172,9 @@ export default function HabitsView({
         </div>
       </div>
 
+      </section>
+
+      <section className="habits-list">
       {CYCLES.map((c) => {
         const list = habits.filter((h) => h.cycle === c.id)
         return (
@@ -210,6 +214,7 @@ export default function HabitsView({
       <div className="limit-note" style={{ marginTop: 24 }}>
         いつも決まった行動は習慣化し、必要以上の時間をかけない。空いた時間を夢に充てる。
       </div>
+      </section>
 
       <button className="fab" aria-label="習慣を追加" onClick={() => onComposingChange(true)}>
         ＋
@@ -245,7 +250,7 @@ export default function HabitsView({
           onClose={() => setEditing(null)}
         />
       )}
-    </>
+    </div>
   )
 }
 

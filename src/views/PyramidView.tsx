@@ -28,7 +28,7 @@ export default function PyramidView({ dreams, settings, onJumpToField, onOpenSet
   const unsorted = byField.unsorted ?? []
 
   return (
-    <>
+    <div className="v-pyramid">
       <button
         className="apex"
         style={{ display: 'block', width: '100%' }}
@@ -95,7 +95,7 @@ export default function PyramidView({ dreams, settings, onJumpToField, onOpenSet
           </button>
         </>
       )}
-    </>
+    </div>
   )
 }
 

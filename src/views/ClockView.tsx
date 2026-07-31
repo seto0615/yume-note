@@ -63,7 +63,8 @@ export default function ClockView({ settings, onOpenSettings }: Props) {
   const overLived = calc.leftDays <= 0
 
   return (
-    <>
+    <div className="v-clock">
+      <section className="clock-main">
       <div className="clock-hero">
         <Geo className="left" tiles={['b', 's o', 'p', 'n br']} cols={1} size={11} gap={3} />
         <Geo className="right" tiles={['p bl', 'b', 's o', 'n']} cols={1} size={11} gap={3} />
@@ -83,6 +84,9 @@ export default function ClockView({ settings, onOpenSettings }: Props) {
         </span>
       </div>
 
+      </section>
+
+      <section className="clock-side">
       <div className="section-label">残り</div>
       <div className="stat-grid">
         <div className="stat">
@@ -99,6 +103,9 @@ export default function ClockView({ settings, onOpenSettings }: Props) {
         </div>
       </div>
 
+      </section>
+
+      <section className="clock-wide">
       <div className="section-label">人生カレンダー — 1マス＝1週</div>
       <div className="life-grid" aria-label={`人生${calc.totalWeeks}週のうち${calc.livedWeeks}週が経過`}>
         {Array.from({ length: calc.totalWeeks }, (_, i) => (
@@ -125,6 +132,7 @@ export default function ClockView({ settings, onOpenSettings }: Props) {
           </>
         )}
       </div>
-    </>
+      </section>
+    </div>
   )
 }

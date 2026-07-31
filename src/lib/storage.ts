@@ -6,6 +6,7 @@ const DATA_VERSION = 1
 
 export const EMPTY_SETTINGS: Settings = {
   name: '',
+  theme: 'dark',
   birthDate: '',
   lifeExpectancy: 90,
   ultimateGoal: '',
@@ -29,6 +30,7 @@ export function normalize(raw: unknown): AppData {
   const expectancy = Number(settings.lifeExpectancy)
   settings.lifeExpectancy =
     Number.isFinite(expectancy) && expectancy > 0 && expectancy <= 150 ? expectancy : 90
+  settings.theme = settings.theme === 'light' ? 'light' : 'dark'
 
   return {
     version: DATA_VERSION,

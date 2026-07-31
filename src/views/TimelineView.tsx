@@ -50,7 +50,7 @@ export default function TimelineView({ dreams, settings, onOpen }: Props) {
   }
 
   return (
-    <>
+    <div className="v-timeline">
       <div className="section-label">未来年表</div>
       {years.map((y) => (
         <div className="year" key={y.year}>
@@ -90,6 +90,6 @@ export default function TimelineView({ dreams, settings, onOpen }: Props) {
           期限が入っていない夢が {undated} 件あります。日付を入れると年表に並びます。
         </div>
       )}
-    </>
+    </div>
   )
 }
